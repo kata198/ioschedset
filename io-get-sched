@@ -1,0 +1,91 @@
+#!/bin/bash
+
+###########################################################################
+#
+#  Copyright (c) 2018 Timothy Savannah All Rights Reserved
+#
+#    Licensed under terms of the GNU General Public License Version 3
+#     which should have been supplied with this distribution as LICENSE
+#
+#    If not, you can access the latest LICENSE at:
+#      https://raw.githubusercontent.com/kata198/ioschedset/master/LICENSE
+#
+#
+#  io-get-sched - Queries the current I/O scheduler for block devices
+#
+###########################################################################
+
+PROG_NAME="${BASH_SOURCE[0]}"
+PROG_PATH="$(realpath "$0")"
+PROG_BASENAME="$(basename "${PROG_PATH}")"
+
+VERSION='1.0.0'
+
+usage() {
+        cat 2>&1 <<EOT 
+Usage: ${PROG_BASENAME} ([block device name1] ... [block device nameN])
+  Queries what scheduler is in use for block devices.
+
+If no arguments are provided, will list all block devices and their
+  corresponding scheduler in the format of (example):
+
+sda: deadline
+sdb: bfq
+
+If arguments are provided, it will query just those blocks.
+
+${PROG_BASENAME} version ${VERSION} by Timothy Savannah
+EOT
+
+}
+
+cd /sys/block
+
+for arg in "$@";
+do
+    if [ "${arg}" = "--help" ];
+    then
+        usage;
+        exit 1;
+    elif [[ "${arg}" = "--version" ]];
+    then
+        printf "\n${PROG_BASENAME} version ${VERSION} by Timothy Savannah\n\n" >&2
+        exit 0;
+    fi
+done
+
+if [ $# -eq 0 ];
+then
+    BLOCK_DEVS="$(echo *)"
+else
+    BLOCK_DEVS="$@"
+fi
+
+exitCode=0
+
+for blockDev in ${BLOCK_DEVS};
+do
+    # Incase we got passed /dev/sda or whatever, do the basename
+    blockDev="$(basename "${blockDev}")"
+    if [ ! -d "${blockDev}" ];
+    then
+        printf "No such block device: '%s'.\n\tRun without agruments for a list of all devices\n" "${blockDev}" >&2
+        # set exitCode to ENOENT [ No such file or directory ]
+        exitCode=2
+        continue
+    fi
+    SCHEDULER="$(cat "./${blockDev}/queue/scheduler" | rextract '[\[]([^\]][^\]]*)[\]]' '${1}')"
+
+    printf "%s:\t%s\n" "${blockDev}" "${SCHEDULER}";
+done
+
+if [ $exitCode -ne 0 ];
+then
+    exit $exitCode;
+fi
+
+# Exit with success
+true;
+
+
+#vim: set ts=4 sw=4 st=4 expandtab :
