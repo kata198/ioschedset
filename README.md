@@ -67,3 +67,23 @@ Or you can set individual block devices by providing them as arguments after the
 	+ Successfully set sda to 'kyber'!
 	+ Successfully set sr0 to 'kyber'!
 
+
+Installation
+------------
+
+This distribution comes with a script, "install.sh" which takes into consideration the environment variables PREFIX and DESTDIR.
+
+You can also specify these as arguments, for example:
+
+    ./install.sh DESTDIR="${pkgdir}"
+
+is treated the same as:
+
+    DESTDIR="${pkgdir}" ./install.sh
+
+See \`./install.sh --help' for more info.
+
+The two files [io-set-sched and io-get-sched] will be installed into ${DESTDIR}/${PREFIX}/bin (/usr/bin by default) and ready to roll.
+
+The tools are written in bash and have no external dependencies.
+
