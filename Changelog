@@ -4,6 +4,8 @@
 
 - Expand the readme, split into sections, add installation notes for Arch Linux
 
+- install.sh - Cleanup, add a bunch of comments. Actually check the return-code of the calls to 'install' and fail the install script if they fail. Cleanup and improve a lot of the output. Have install.sh overwrite the VERSION variable in io-get-sched and io-set-sched based on the one found within itself
+
 * 1.0.0 - Dec 05 2018
 
 - Initial Release
