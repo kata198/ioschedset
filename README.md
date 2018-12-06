@@ -87,3 +87,20 @@ The two files [io-set-sched and io-get-sched] will be installed into ${DESTDIR}/
 
 The tools are written in bash and have no external dependencies.
 
+
+**Arch Linux**
+
+For installation under Arch Linux, you can use the package in the AUR: https://aur.archlinux.org/packages/ioschedset or a direct link to the tarball containing the makepkg directory (contains the ioschedset PKGBUILD): https://aur.archlinux.org/cgit/aur.git/snapshot/ioschedset.tar.gz
+
+
+1. Download and extract the tarball from https://aur.archlinux.org/cgit/aur.git/snapshot/ioschedset.tar.gz
+
+2. cd into *'ioschedset'* directory
+
+3. Run *\`makepkg'* as your normal user (non-root)
+
+4. Install the package:
+
+	pacman -U ioschedset-*.pkg.tar.xz
+
+
