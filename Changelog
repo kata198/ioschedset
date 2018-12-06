@@ -1,3 +1,9 @@
+* 1.0.1 - Dec 06 2018
+
+- Add a local PKGBUILD which will build a package directly from the git tree. This differs from the AUR version which downloads a source tarball and works from that.
+
+- Expand the readme, split into sections, add installation notes for Arch Linux
+
 * 1.0.0 - Dec 05 2018
 
 - Initial Release
