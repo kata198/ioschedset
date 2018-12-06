@@ -1,7 +1,10 @@
-ioschedset
-==========
+#ioschedset
 
 Commandline tools to query and/or set the I/O schedulers for block devices on Linux systems.
+
+
+The Tools
+=========
 
 
 Querying Current I/O Schedulers
@@ -69,7 +72,13 @@ Or you can set individual block devices by providing them as arguments after the
 
 
 Installation
-------------
+============
+
+Installation instructions follow below.
+
+
+Manual Install
+--------------
 
 This distribution comes with a script, "install.sh" which takes into consideration the environment variables PREFIX and DESTDIR.
 
@@ -88,9 +97,17 @@ The two files [io-set-sched and io-get-sched] will be installed into ${DESTDIR}/
 The tools are written in bash and have no external dependencies.
 
 
-**Arch Linux**
+Arch Linux
+----------
 
-For installation under Arch Linux, you can use the package in the AUR: https://aur.archlinux.org/packages/ioschedset or a direct link to the tarball containing the makepkg directory (contains the ioschedset PKGBUILD): https://aur.archlinux.org/cgit/aur.git/snapshot/ioschedset.tar.gz
+For installation under Arch Linux, there are two options.
+
+The first option is the 'official' releases, which are available via AUR: https://aur.archlinux.org/packages/ioschedset
+
+The second alternative option is suitable for local installs - the git project contains a PKGBUILD file which works from the git directory rather than from a source tarball.
+
+
+**From AUR (official package)**
 
 
 1. Download and extract the tarball from https://aur.archlinux.org/cgit/aur.git/snapshot/ioschedset.tar.gz
@@ -101,6 +118,20 @@ For installation under Arch Linux, you can use the package in the AUR: https://a
 
 4. Install the package:
 
-	pacman -U ioschedset-*.pkg.tar.xz
+	pacman -U ioschedset-*.pkg.tar.*
+
+
+**From local PKGBUILD**
+
+
+1. Either download a release from https://github.com/kata198/ioschedset/releases or use git to clone https://github.com/kata198/ioschedset . If you use git, there are tags for each official release which matches the version number (git tag -l to list tags, git branch -l to list branches). "master" should always match the latest official release.
+
+2. Navigate into the *'ioschedset'* directory
+
+3. Run *\`makepkg'* as your normal user (non-root)
+
+4. Install the package:
+
+	pacman -U ioschedset-*.pkg.tar.*
 
 
