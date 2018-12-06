@@ -1,0 +1,11 @@
+pkgbase = ioschedset
+	pkgdesc = Commandline tools to query and/or set the I/O schedulers for block devices on Linux systems.
+	pkgver = 1.0.0
+	pkgrel = 1
+	url = http://github.com/kata198/ioschedset
+	arch = any
+	license = GPLv3
+	depends = bash
+
+pkgname = ioschedset
+
