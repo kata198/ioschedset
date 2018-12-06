@@ -25,10 +25,13 @@ then
     PREFIX="/usr"
 fi
 
+# PROG_NAME / PROG_PATH / PROG_BASENAME - Names involving this script
 PROG_NAME="${BASH_SOURCE[0]}"
 PROG_PATH="$(realpath "$0")"
 PROG_BASENAME="$(basename "${PROG_PATH}")"
 
+# VERSION - We overwrite the "VERSION" variable in the
+#  io-get-sched and io-set-sched executables with this value
 VERSION='1.0.0'
 
 usage() {
@@ -51,6 +54,32 @@ PREFIX - Defines the leading path prefix.
 EOT
 
 }
+
+########################
+# 
+# die - Print a message to stderr and exit
+#
+#    1st arg - exit code <int> - Will exit with this code
+#
+#    2nd arg - Format string <str> - Format string to printf
+#
+#    3rd..Nth arg - Format string args - Any va_args to resolve
+#                     within your format string
+#
+############################################
+die() {
+
+    EXIT_CODE=$1
+    shift;
+
+    FORMAT_STR="$1"
+    shift
+
+    printf "${FORMAT_STR}" "$@" >&2
+    
+    exit ${EXIT_CODE}
+}
+
 
 for arg in "$@";
 do
@@ -80,11 +109,29 @@ INSTALLDIR="$(echo "${INSTALLDIR}" | sed -e 's|//|/|g' | sed -e 's|//|/|g')"
 
 printf "Version: ${VERSION}\n\n"
 
-printf "DESTDIR=%s\nPREFIX=%s\n\nInstalling into: %s\n" "${DESTDIR}" "${PREFIX}" "${INSTALLDIR}"
+printf "DESTDIR=%s\nPREFIX=%s\n\nInstalling into: %s\n\n" "${DESTDIR}" "${PREFIX}" "${INSTALLDIR}"
 
-mkdir -p "${INSTALLDIR}/bin"
+mkdir -p "${INSTALLDIR}/bin" || printf "  WARNING: Could not create directory '${INSTALLDIR}/bin', install may fail. Check permissions?\n\n" >&2
 
+# Install io-get-sched
 printf "\t"'install -m 755 io-get-sched "'"${INSTALLDIR}"'/bin"'"\n"
-install -m 755 io-get-sched "${INSTALLDIR}/bin"
+install -m 755 io-get-sched "${INSTALLDIR}/bin" || die $? "  Failed to install \"%s\" to \"%s\". Exit code=%d\n\nAborting...\n" 'io-get-sched' "${INSTALLDIR}/bin" "$?" 
+cat <<EOT
+	sed -e 's/^VERSION=.*$/VERSION=${VERSION}/g' -i "${INSTALLDIR}/bin/io-get-sched"
+EOT
+sed -e 's/^VERSION=.*$/VERSION='"${VERSION}"'/g' -i "${INSTALLDIR}/bin/io-get-sched"
+
+echo;
+
+# Install io-set-sched
 printf "\t"'install -m 755 io-set-sched "'"${INSTALLDIR}"'/bin"'"\n"
-install -m 755 io-set-sched "${INSTALLDIR}/bin"
+install -m 755 io-set-sched "${INSTALLDIR}/bin" || die $? "  Failed to install \"%s\" to \"%s\". Exit code=%d\n\nAborting...\n" 'io-set-sched' "${INSTALLDIR}/bin" "$?" 
+cat << EOT
+	sed -e 's/^VERSION=.*$/VERSION=${VERSION}/g' -i "${INSTALLDIR}/bin/io-set-sched"
+EOT
+sed -e 's/^VERSION=.*$/VERSION='"${VERSION}"'/g' -i "${INSTALLDIR}/bin/io-set-sched"
+
+echo
+true
+
+# vim: set ts=4 sw=4 st=4 expandtab :
