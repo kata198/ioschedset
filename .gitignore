@@ -1,2 +1,5 @@
 *~
 *.sw[po]
+*.pkg.tar.*
+pkg/
+src/
