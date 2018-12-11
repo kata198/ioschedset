@@ -32,7 +32,7 @@ PROG_BASENAME="$(basename "${PROG_PATH}")"
 
 # VERSION - We overwrite the "VERSION" variable in the
 #  io-get-sched and io-set-sched executables with this value
-VERSION='1.0.1'
+VERSION='1.1.0'
 
 usage() {
     cat >&2 <<EOT
