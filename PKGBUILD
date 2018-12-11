@@ -16,7 +16,7 @@
 ####################################################################
 
 pkgname=ioschedset
-pkgver=1.0.1_git
+pkgver=1.1.0_git
 pkgrel=1
 pkgdesc="Commandline tools to query and/or set the I/O schedulers for block devices on Linux systems."
 arch=('any')

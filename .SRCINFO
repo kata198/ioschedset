@@ -1,6 +1,6 @@
 pkgbase = ioschedset
 	pkgdesc = Commandline tools to query and/or set the I/O schedulers for block devices on Linux systems.
-	pkgver = 1.0.0
+	pkgver = 1.1.0_git
 	pkgrel = 1
 	url = http://github.com/kata198/ioschedset
 	arch = any
