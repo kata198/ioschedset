@@ -34,19 +34,37 @@ sdb: bfq
 
 If arguments are provided, it will query just those blocks.
 
+You may also specify the argument, '--list', which will print
+ the available I/O schedulers on this system.
+
 ${PROG_BASENAME} version ${VERSION} by Timothy Savannah
 EOT
 
+}
+
+get_available_schedulers() {
+    pushd /sys/block >/dev/null 2>&1
+    FIRST_BLOCK_DEVICE="$(echo * | tr ' ' '\n' | head -n1)"
+    popd >/dev/null 2>&1
+
+    AVAILABLE_SCHEDULERS="$(cat "/sys/block/${FIRST_BLOCK_DEVICE}/queue/scheduler" | sed -e 's|\[||g' -e 's|\]||g')"
+    
+    echo "${AVAILABLE_SCHEDULERS}"
 }
 
 cd /sys/block
 
 for arg in "$@";
 do
-    if [ "${arg}" = "--help" ];
+    if [[ "${arg}" = "--help" ]];
     then
         usage;
         exit 1;
+    elif [[ "${arg}" = '--list' ]];
+    then
+        AVAILABLE_SCHEDULERS="$(get_available_schedulers)"
+        printf "%s\n" "${AVAILABLE_SCHEDULERS}"
+        exit 0;
     elif [[ "${arg}" = "--version" ]];
     then
         printf "\n${PROG_BASENAME} version ${VERSION} by Timothy Savannah\n\n" >&2
