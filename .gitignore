@@ -3,3 +3,4 @@
 *.pkg.tar.*
 pkg/
 src/
+man/*.gz
