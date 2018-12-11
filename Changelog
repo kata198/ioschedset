@@ -1,4 +1,6 @@
-* 1.0.2 - Dec 11 2018
+* 1.1.0 - Dec 11 2018
+
+- Add man pages for io-get-sched(8) and io-set-sched(8)
 
 - Fix header label in README.md
 
