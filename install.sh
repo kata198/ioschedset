@@ -111,6 +111,10 @@ printf "Version: ${VERSION}\n\n"
 
 printf "DESTDIR=%s\nPREFIX=%s\n\nInstalling into: %s\n\n" "${DESTDIR}" "${PREFIX}" "${INSTALLDIR}"
 
+#########################################
+##         INSTALL EXECUTABLES         ##
+#########################################
+
 mkdir -p "${INSTALLDIR}/bin" || printf "  WARNING: Could not create directory '${INSTALLDIR}/bin', install may fail. Check permissions?\n\n" >&2
 
 # Install io-get-sched
@@ -130,6 +134,25 @@ cat << EOT
 	sed -e 's/^VERSION=.*$/VERSION=${VERSION}/g' -i "${INSTALLDIR}/bin/io-set-sched"
 EOT
 sed -e 's/^VERSION=.*$/VERSION='"${VERSION}"'/g' -i "${INSTALLDIR}/bin/io-set-sched"
+
+#########################################
+##         INSTALL MAN PAGES           ##
+#########################################
+
+mkdir -p "${INSTALLDIR}/share/man/man8" || printf "  WARNING: Could not create directory '${INSTALLDIR}/share/man/man3', install may fail. Check permissions?\n\n" >&2
+
+# Install man pages
+for manpageName in "io-get-sched.8" "io-set-sched.8";
+do
+    echo;
+    printf "\t"'cat "man/'"${manpageName}"'" | gzip -c > "man/'"${manpageName}"'.gz"'"\n"
+    (cat "man/${manpageName}" | gzip -c > "man/${manpageName}.gz") || die $? "  Failed to compress man page at \"man/${manpageName}\". Exit code=%d\n\nAborting...\n" $?
+
+
+    printf "\t"'install -m 755 "man/'"${manpageName}"'" "'"${INSTALLDIR}"'/share/man/man8'"\n"
+    install -m 755 "man/${manpageName}" "${INSTALLDIR}/share/man/man8" || die $? "  Failed to install \"%s\" to \"%s\".  Exit code=%d\n\nAborting...\n" "man/${manpageName}" "${INSTALLDIR}/share/man/man8"
+done
+
 
 echo
 true
