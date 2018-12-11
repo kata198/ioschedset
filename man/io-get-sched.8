@@ -1,0 +1,86 @@
+'\" et
+.TH io-get-sched 8 "2018-12-11" "io-get-sched" "ioschedset"
+
+.SH NAME
+.P
+.nf
+io-get-sched - Query the I/O schedulers being used by the various block devices attached to this system.
+.fi
+.SH SYNOPSIS
+.nf
+Print all block devices and the I/O scheduler currently being used:
+
+.B io-get-sched
+
+Print the I/O scheduler being used by a specific device, "sda":
+
+.B io-get-sched sda
+
+Print the I/O scheduler being used by a specific devices, "sda" or "sdb":
+
+.B io-get-sched sda sdb
+
+List available I/O schedulers on this system:
+
+.B io-get-sched --list
+
+General usage form:
+
+.B io-get-sched ([block device 1]) (block device N])
+
+.SH DESCRIPTION
+
+.P
+io-get-sched is a tool to query the I/O scheduler currently being used by the various block devices on the system.
+
+With no arguments, it will print a list of all block devices and their scheduler.
+
+.PP
+Example:
+
+.nf
+.fam C
+.B  io-get-sched
+
+    sda: bfq
+    sdb: deadline
+
+.nf
+
+.P
+Optionally, you can also specify specific block devices as arguments to only query those devices.
+
+.PP
+Example:
+
+.nf
+.fam C
+.B  io-get-sched sda
+
+    sda: bfq
+
+.nf
+
+.SH RETURN VALUE
+.P
+Exits with code 0 on success.
+.PP
+If there was an error, a non-zero error code will be returned describing the problem.
+
+.SH AUTHOR
+
+ioschedset can be found at https://github.com/kata198/ioschedset
+
+Created and maintained by Timothy Savannah
+
+Copyright (c) 2018, All Rights Reserved
+
+Licensed under terms of the GNU General Purpose License Version 3, available at:
+
+https://github.com/kata198/ioschedset/blob/master/LICENSE
+
+.SH SEE ALSO
+
+.P
+\fBio-set-sched\fP(8) - Changing the I/O scheduler used by one or more block devices
+

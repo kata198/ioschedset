@@ -1,0 +1,64 @@
+'\" et
+.TH io-set-sched 8 "2018-12-11" "io-set-sched" "ioschedset"
+
+.SH NAME
+.P
+.nf
+io-set-sched - Change the I/O scheduler being used by one or more block devices attached to the system.
+.fi
+.SH SYNOPSIS
+.nf
+Set all block devices to use I/O scheduler, 'deadline':
+
+.B io-set-sched deadline
+
+Set the I/O scheduler being used by device "sda" to 'bfq':
+
+.B io-set-sched bfq sda
+
+Set the I/O scheduler being used by devices "sda" and "sdb" to 'bfq':
+
+.B io-set-sched bfq sda sdb
+
+List available I/O schedulers on this system:
+
+.B io-set-sched --list
+
+General usage form:
+
+.B io-set-sched [scheduler] ([block device name1] ... [block device nameN])
+
+.SH DESCRIPTION
+
+.P
+io-set-sched is a tool to set the I/O scheduler currently being used by the various block devices on the system.
+
+\fBio-set-sched --list\fP will list the available schedulers on the system.
+
+The changes will remain until the next time the server is rebooted.
+
+.nf
+
+.SH RETURN VALUE
+.P
+Exits with code 0 on success.
+.PP
+If there was an error, a non-zero error code will be returned describing the problem.
+
+.SH AUTHOR
+
+ioschedset can be found at https://github.com/kata198/ioschedset
+
+Created and maintained by Timothy Savannah
+
+Copyright (c) 2018, All Rights Reserved
+
+Licensed under terms of the GNU General Purpose License Version 3, available at:
+
+https://github.com/kata198/ioschedset/blob/master/LICENSE
+
+.SH SEE ALSO
+
+.P
+\fBio-get-sched\fP(8) - Querying the I/O scheduler used by one or more block devices
+
