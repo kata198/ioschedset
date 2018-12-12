@@ -19,7 +19,7 @@ PROG_NAME="${BASH_SOURCE[0]}"
 PROG_PATH="$(realpath "$0")"
 PROG_BASENAME="$(basename "${PROG_PATH}")"
 
-VERSION='1.1.0'
+VERSION='1.1.1'
 
 usage() {
         cat 2>&1 <<EOT 
