@@ -38,21 +38,21 @@ The provided **io-set-sched** tool will assign a given I/O scheduler to all or s
 
 It requires at least 1 argument: the I/O scheduler name.
 
-You can get a list of available options eiter by running with \-\-help or \-\-list.
+You can get a list of available schedulers by running with \-\-list.
 
 For example:
 
 	[user@hostname ~]$ io-set-sched --list
 	mq-deadline kyber bfq none
 
-So in this instance, the system has "mq-deadline", "kyber", "bfq", and "none" (no-op) available.
+So in this instance, the system has "mq-deadline" (deadline), "kyber", "bfq", and "none" (no-op) available.
 
 *While querying the current I/O scheduler for block devices or available schedulers does not require root, actually changing the I/O scheduler used for a block device **does** require root.*
 
 *So io-set-sched will attempt to sudo as root before adjusting the I/O scheduler on block devices.*
 
 
-You can set the same I/O scheduler for all devices via:
+You can set the I/O scheduler for all devices by just providing the desired scheduler name as argument:
 
 	[user@hostname ~]$ io-set-sched kyber
 	Must be root to set IO Scheduler. Rerunning under sudo...
@@ -62,7 +62,7 @@ You can set the same I/O scheduler for all devices via:
 	+ Successfully set sr0 to 'kyber'!
 
 
-Or you can set individual block devices by providing them as arguments after the scheduler name:
+To change individual / specific devices, pass their names as arguments following the scheduler name:
 
 	[user@hostname ~]$ io-set-sched kyber sda sr0
 	Must be root to set IO Scheduler. Rerunning under sudo...
@@ -92,7 +92,9 @@ is treated the same as:
 
 See \`./install.sh --help' for more info.
 
-The two files [io-set-sched and io-get-sched] will be installed into ${DESTDIR}/${PREFIX}/bin (/usr/bin by default) and ready to roll.
+
+Running install.sh will cause the two executables (io-set-sched and io-get-sched) to be installed into ${DESTDIR}/${PREFIX}/bin (/usr/bin by default), and the man pages into ${DESTDIR}/${PREFIX}/share/man (/usr/share/man by default).
+
 
 The tools are written in bash and have no external dependencies.
 
