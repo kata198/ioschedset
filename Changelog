@@ -1,3 +1,14 @@
+* 1.1.1 - Dec 11 2018
+
+- Cleanup the README
+
+- Install the README file into ${DESTDIR}/${PREFIX}/share/ioschedset (default /usr/share/ioschedset)
+
+- Install the LICENSE file into ${DESTDIR}/${PREFIX}/share/licenses/ioschedstat (default /usr/share/licenses/ioschedstat)
+
+- Major rework of install.sh
+
+
 * 1.1.0 - Dec 11 2018
 
 - Add man pages for io-get-sched(8) and io-set-sched(8)
