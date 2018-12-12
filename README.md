@@ -93,7 +93,7 @@ is treated the same as:
 See \`./install.sh --help' for more info.
 
 
-Running install.sh will cause the two executables (io-set-sched and io-get-sched) to be installed into ${DESTDIR}/${PREFIX}/bin (/usr/bin by default), and the man pages into ${DESTDIR}/${PREFIX}/share/man (/usr/share/man by default).
+Unless you are building a package or have special constraints, you can just run *./install.sh* to install into the system globally, or *./install.sh PREFIX=$HOME* to install into the local user's HOME directory.
 
 
 The tools are written in bash and have no external dependencies.
